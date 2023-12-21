@@ -61,6 +61,11 @@ function Navbar() {
         <li className='li'>
           <NavLink className="nav-link" to="/profile">UserProfile</NavLink>
         </li>
+
+        <li className='li'>
+          <NavLink className="nav-link" to="/message">Messages</NavLink>
+        </li>
+
         <li className='li'>
         <button onClick={(e) => handleLogout(e)} className="logout-button" >Logout</button>
         </li>

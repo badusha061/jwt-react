@@ -61,7 +61,107 @@ function AddUser() {
       };
 
     const handleSubmit = (e) =>{
-        e.preventDefault();
+      e.preventDefault();
+      if(adduser.first_name.trim() === ''){
+        const Toast = Swal.mixin({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 3000,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+              toast.onmouseenter = Swal.stopTimer;
+              toast.onmouseleave = Swal.resumeTimer;
+            },
+            
+          });
+          
+          Toast.fire({
+            icon: 'error',
+            title: 'First Name cannot be Empty',
+          });
+        return false 
+    }
+    if(adduser.last_name.trim() === ''){
+        const Toast = Swal.mixin({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 3000,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+              toast.onmouseenter = Swal.stopTimer;
+              toast.onmouseleave = Swal.resumeTimer;
+            },
+            
+          });
+          
+          Toast.fire({
+            icon: 'error',
+            title: 'Last Name cannot be Empty',
+          });
+        return false 
+    }
+    if(adduser.email.trim() === ''){
+        const Toast = Swal.mixin({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 3000,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+              toast.onmouseenter = Swal.stopTimer;
+              toast.onmouseleave = Swal.resumeTimer;
+            },
+            
+          });
+          
+          Toast.fire({
+            icon: 'error',
+            title: 'Email cannot be Empty',
+          });
+        return false 
+    }
+    if(adduser.password.trim() === ''){
+        const Toast = Swal.mixin({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 3000,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+              toast.onmouseenter = Swal.stopTimer;
+              toast.onmouseleave = Swal.resumeTimer;
+            },
+            
+          });
+          
+          Toast.fire({
+            icon: 'error',
+            title: 'Password cannot be Empty',
+          });
+        return false 
+    }
+    if(adduser.confirm_password.trim() === ''){
+        const Toast = Swal.mixin({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 3000,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+              toast.onmouseenter = Swal.stopTimer;
+              toast.onmouseleave = Swal.resumeTimer;
+            },
+            
+          });
+          
+          Toast.fire({
+            icon: 'error',
+            title: 'Conform Password cannot be Empty',
+          });
+        return false 
+    }
         if(validateForm()){
             const apiUrl = `${BASE_URL}/adduser`
             axios.post(apiUrl,{
@@ -72,6 +172,7 @@ function AddUser() {
                 password:adduser.password
             })
             .then((response)=>{
+              console.log(response.data);
                 const Toast = Swal.mixin({
                     toast: true,
                     position: "top-end",
@@ -103,7 +204,7 @@ function AddUser() {
                   
                   Toast.fire({
                     icon: 'error',
-                    title: error,
+                    title:'Email is already taken',
                   });
                 return false
             })
@@ -128,6 +229,7 @@ function AddUser() {
             type="text"
             id="first_name"
             name="first_name"
+            className='input-2'
             onChange={handleInputChange}
           />
              {error.first_name && <p className='error-message'>{error.first_name}</p>}
@@ -139,6 +241,7 @@ function AddUser() {
             type="text"
             id="last_name"
             name="last_name"
+            className='input-2'
             onChange={handleInputChange}            
           />
             {error.last_name && <p className='error-message'>{error.last_name}</p>}
@@ -150,6 +253,7 @@ function AddUser() {
             type="email"
             id="email"
             name="email"
+            className='input-2'
             onChange={handleInputChange}            
           />
              {error.email && <p className='error-message'>{error.email}</p>}
@@ -161,6 +265,7 @@ function AddUser() {
             type="password"
             id="password"
             name="password"
+            className='input-2'
             onChange={handleInputChange}            
           />
              {error.password && <p className='error-message'>{error.password}</p>}
@@ -171,6 +276,7 @@ function AddUser() {
           <input
             type="password"
             id="conformpassword"
+            className='input-2'
             name="confirm_password"
             onChange={handleInputChange}                        
           />
@@ -182,6 +288,7 @@ function AddUser() {
                 type="checkbox"
                 id="is_active"
                 name="is_active"
+                className='input-2'
                 checked={adduser.is_active}
                 onChange={handleInputChange}
                 />

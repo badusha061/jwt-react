@@ -48,6 +48,45 @@ const validform = () =>{
   }
   const AdminLogin = async (e) => {
     e.preventDefault()
+    if(form.email === ''){
+      const Toast = Swal.mixin({
+        toast: true,
+        position: 'top-end',
+        showConfirmButton: false,
+        timer: 3000,
+        timerProgressBar: true,
+        didOpen: (toast) => {
+          toast.onmouseenter = Swal.stopTimer;
+          toast.onmouseleave = Swal.resumeTimer;
+        },
+      });
+      
+      Toast.fire({
+        icon: 'error',
+        title: 'Admin Email Cannot be Empty',
+      });
+    return false 
+    }
+    if(form.password === ''){
+      const Toast = Swal.mixin({
+        toast: true,
+        position: 'top-end',
+        showConfirmButton: false,
+        timer: 3000,
+        timerProgressBar: true,
+        didOpen: (toast) => {
+          toast.onmouseenter = Swal.stopTimer;
+          toast.onmouseleave = Swal.resumeTimer;
+        },
+      });
+      
+      Toast.fire({
+        icon: 'error',
+        title: 'Admin Password Cannot be Empty',
+      });
+    return false 
+    }
+
     if(validform()){
       const re = await dispatch(superUserLogin(form))
     if(re.payload !== undefined){
@@ -135,6 +174,7 @@ const validform = () =>{
                 required
                 placeholder='Enter your Email'
                 onChange={handleSet}
+                className='input-1'
             />
              {errors.email && <p className='error-message'>{errors.email}</p>}
 
@@ -147,6 +187,7 @@ const validform = () =>{
                 required
                 placeholder='Enter your Password'
                 onChange={handleSet}
+                className='input-1'
             />
              {errors.password && <p className='error-message'>{errors.password}</p>}
 

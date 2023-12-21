@@ -15,6 +15,7 @@ import Adminlogin from './Components/AdminLogin/AdminLogin.jsx'
 import AdminDashboard from './Components/AdminDashboard/AdminDashboard.jsx'
 import EditUser from './Components/AdminDashboard/EditUser.jsx';
 import AddUser from './Components/AdminDashboard/AddUser.jsx';
+import Message from './Components/Message/Message.jsx';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -27,6 +28,7 @@ root.render(
                     <Route path='register/' element={<Register />} />
                     <Route  path='login/' element={<Login />} />
                     <Route  path='profile/' element={<Profile />} />
+                    <Route path='message/' element={<Message />}/>
                     <Route  path='adminlogin/' element={<Adminlogin/>} />
                 </Route>
                 <Route  path='admindashboard/' element={<AdminDashboard />} />

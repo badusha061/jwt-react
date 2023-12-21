@@ -6,6 +6,8 @@ import { BASE_URL } from '../../features/userApi';
 
 function Profile() {
   const [file ,setFile] = useState(null)
+  const [update ,setUpdate] = useState(false)
+
   let setjson = localStorage.getItem('userdetails');
   let setuser = JSON.parse(setjson);
   const getUserDetails = () => {
@@ -28,6 +30,7 @@ function Profile() {
           setFile(selectfile[0])
       }
     }
+
     const handleSubmit = async (e) => {
       e.preventDefault();
       if(file === null){
@@ -61,6 +64,7 @@ function Profile() {
         .then((response) => {
           user.auth_user.user_image = response.data.user_image;
           localStorage.setItem('userdetails', JSON.stringify(user));
+          setUpdate(!update)
           console.log(response.data.user_image);
           const Toast = Swal.mixin({
             toast: true,
@@ -104,7 +108,7 @@ function Profile() {
      
     }
   return (
-     <>   
+    <div key={update}>
    {user ? (
       <div className="profile-container">
       <div className="profile-header">
@@ -137,8 +141,7 @@ function Profile() {
             <strong>Go To Login</strong> 
         </p>
     )}
-    </>
-
+  </div>
   );
 }
 

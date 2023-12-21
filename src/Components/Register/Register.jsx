@@ -63,6 +63,107 @@ function Register() {
 
     const userRegister = (e) => {
         e.preventDefault();
+        if(formData.first_name.trim() === ''){
+            const Toast = Swal.mixin({
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                  toast.onmouseenter = Swal.stopTimer;
+                  toast.onmouseleave = Swal.resumeTimer;
+                },
+                
+              });
+              
+              Toast.fire({
+                icon: 'error',
+                title: 'First Name cannot be Empty',
+              });
+            return false 
+        }
+        if(formData.last_name.trim() === ''){
+            const Toast = Swal.mixin({
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                  toast.onmouseenter = Swal.stopTimer;
+                  toast.onmouseleave = Swal.resumeTimer;
+                },
+                
+              });
+              
+              Toast.fire({
+                icon: 'error',
+                title: 'Last Name cannot be Empty',
+              });
+            return false 
+        }
+        if(formData.email.trim() === ''){
+            const Toast = Swal.mixin({
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                  toast.onmouseenter = Swal.stopTimer;
+                  toast.onmouseleave = Swal.resumeTimer;
+                },
+                
+              });
+              
+              Toast.fire({
+                icon: 'error',
+                title: 'Email cannot be Empty',
+              });
+            return false 
+        }
+        if(formData.password.trim() === ''){
+            const Toast = Swal.mixin({
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                  toast.onmouseenter = Swal.stopTimer;
+                  toast.onmouseleave = Swal.resumeTimer;
+                },
+                
+              });
+              
+              Toast.fire({
+                icon: 'error',
+                title: 'Password cannot be Empty',
+              });
+            return false 
+        }
+        if(formData.confirm_password.trim() === ''){
+            const Toast = Swal.mixin({
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                  toast.onmouseenter = Swal.stopTimer;
+                  toast.onmouseleave = Swal.resumeTimer;
+                },
+                
+              });
+              
+              Toast.fire({
+                icon: 'error',
+                title: 'Conform Password cannot be Empty',
+              });
+            return false 
+        }
+
         if(validateForm()){
             dispatch(userRegistation(formData))
             .then((response) => {
@@ -131,6 +232,7 @@ function Register() {
                 onChange={handleInputChange}
                 required
                 placeholder='Enter First Name'
+                className='input-1'
             />
              {error.first_name && <p className='error-message'>{error.first_name}</p>}
 
@@ -144,6 +246,7 @@ function Register() {
                 onChange={handleInputChange}
                 required
                 placeholder='Enter Last Name'
+                className='input-1'
 
             />
              {error.last_name && <p className='error-message'>{error.last_name}</p>}
@@ -157,6 +260,7 @@ function Register() {
                 onChange={handleInputChange}
                 required
                 placeholder='Enter Email Address'
+                className='input-1'
 
             />
              {error.email && <p className='error-message'>{error.email}</p>}
@@ -170,7 +274,8 @@ function Register() {
                 onChange={handleInputChange}
                 required
                 placeholder='Enter password '
-
+                className='input-1'
+                
             />
              {error.password && <p className='error-message'>{error.password}</p>}
 
@@ -183,7 +288,7 @@ function Register() {
                 onChange={handleInputChange}
                 required
                 placeholder='Conform password'
-
+                className='input-1'
             />
              {error.confirm_password && <p className='error-message'>{error.confirm_password}</p>}
 

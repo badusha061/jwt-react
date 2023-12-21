@@ -18,34 +18,34 @@ function EditUser() {
     });
 
     const [error , setError] = useState({
-        first_name:'',
-        last_name:'',
+      firstName:'',
+      lastName:'',
         email:'',
 
     })
 
     const handleChange = (e) => {
         const { name, value, type, checked } = e.target;
-        setFormData({
-        ...formData,
-        [name]: type === 'checkbox' ? checked : value,
-        });
+        setFormData((prevData) => ({
+          ...prevData,
+          [name]: type === 'checkbox' ? checked : value,
+      }));
     };
 
     const validateForm = () => {
-        const {first_name,last_name,email} = formData;
+        const {firstName,lastName,email} = formData;
         const newError = {};
         if(!validator.isEmail(email)){
             newError.email = "Please enter valid email address"
         }
-        if (!validator.isAlpha(first_name)) {
-            newError.first_name = 'First name should only contain letters';
+        if (!validator.isAlpha(firstName)) {
+            newError.firstName = 'First name should only contain letters';
         }
-        if (validator.isEmpty(first_name)) {
-            newError.first_name = 'First name cannot be empty';
+        if (validator.isEmpty(firstName)) {
+            newError.firstName = 'First name cannot be empty';
         }
-        if (validator.isEmpty(last_name)) {
-            newError.last_name = 'Last name cannot be empty';
+        if (validator.isEmpty(lastName)) {
+            newError.lastName = 'Last name cannot be empty';
         }
 
     
@@ -60,6 +60,67 @@ function EditUser() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    if(formData.firstName.trim() === ''){
+      const Toast = Swal.mixin({
+          toast: true,
+          position: 'top-end',
+          showConfirmButton: false,
+          timer: 3000,
+          timerProgressBar: true,
+          didOpen: (toast) => {
+            toast.onmouseenter = Swal.stopTimer;
+            toast.onmouseleave = Swal.resumeTimer;
+          },
+          
+        });
+        
+        Toast.fire({
+          icon: 'error',
+          title: 'First Name cannot be Empty',
+        });
+      return false 
+  }
+  if(formData.lastName.trim() === ''){
+      const Toast = Swal.mixin({
+          toast: true,
+          position: 'top-end',
+          showConfirmButton: false,
+          timer: 3000,
+          timerProgressBar: true,
+          didOpen: (toast) => {
+            toast.onmouseenter = Swal.stopTimer;
+            toast.onmouseleave = Swal.resumeTimer;
+          },
+          
+        });
+        
+        Toast.fire({
+          icon: 'error',
+          title: 'Last Name cannot be Empty',
+        });
+      return false 
+  }
+  if(formData.email.trim() === ''){
+      const Toast = Swal.mixin({
+          toast: true,
+          position: 'top-end',
+          showConfirmButton: false,
+          timer: 3000,
+          timerProgressBar: true,
+          didOpen: (toast) => {
+            toast.onmouseenter = Swal.stopTimer;
+            toast.onmouseleave = Swal.resumeTimer;
+          },
+          
+        });
+        
+        Toast.fire({
+          icon: 'error',
+          title: 'Email cannot be Empty',
+        });
+      return false 
+  }
+
     if(validateForm()){
         const apiUrl = `${BASE_URL}/edituser/${userId}`
     axios.post(apiUrl,{
@@ -102,19 +163,13 @@ function EditUser() {
           
           Toast.fire({
             icon: 'error',
-            title: error,
+            title: 'Email is Already taken',
           });
         return false
     })
-    }else{
-        Swal.fire({
-            icon: 'warning',
-            title: 'Oops...',
-            text: 'Please fill in the required fields correctly.',
-            footer: 'Check the form and try again.'
-        });
-        return false
-    }
+  }else{
+    console.log('error');
+  }
     
   };
 
@@ -128,6 +183,7 @@ function EditUser() {
             type="text"
             id="firstName"
             name="firstName"
+            className='input-2'
             value={formData.firstName}
             onChange={handleChange}
           />
@@ -141,6 +197,7 @@ function EditUser() {
             type="text"
             id="lastName"
             name="lastName"
+            className='input-2'
             value={formData.lastName}
             onChange={handleChange}
           />
@@ -153,6 +210,7 @@ function EditUser() {
             type="email"
             id="email"
             name="email"
+            className='input-2'
             value={formData.email}
             onChange={handleChange}
           />

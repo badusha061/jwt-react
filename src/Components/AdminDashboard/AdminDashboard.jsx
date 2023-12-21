@@ -9,16 +9,24 @@ const AdminDashboard = () => {
   const [users , setUsres] = useState([]);
   const [loading , setLoading] = useState(true);
   const [search , setSearch] = useState(null)
-  const [result , setResult] = useState([])
-  
+  const [updateTigger, setUpdateTigger] = useState(false)
+
+
   const getAdminDetails = () =>{
     let userjson = localStorage.getItem('admindetails')
     let userdetails = JSON.parse(userjson)
     return userdetails
    }
    const admin = getAdminDetails();
-   console.log('the admin',admin.token.is_admin);
   const navigate = useNavigate();
+  
+  useEffect(() => {
+    if (admin === null || !admin.token || admin.token.is_admin === false) {
+      navigate('/adminlogin');
+    }
+  }, []);
+  
+
   useEffect(() =>{
     let apiUrl;
     if(search){
@@ -42,7 +50,7 @@ const AdminDashboard = () => {
       }
       setLoading(false);
     })
-  },[search,navigate]);
+  },[search,navigate,updateTigger]);
 
   const handle_edit = async(userid) =>{
       navigate(`/edituser/${userid}`)
@@ -55,6 +63,7 @@ const AdminDashboard = () => {
       
     )
     if(response.data.message === "Successfully Deleted"){
+      setUpdateTigger(!updateTigger)
       const Toast = Swal.mixin({
         toast: true,
         position: "top-end",
@@ -89,7 +98,10 @@ const AdminDashboard = () => {
       });
     return false
     }
+      
+ 
   }
+
   const handleSearch =  (e) =>{
     e.preventDefault()
     setSearch(e.target.value)
@@ -118,7 +130,7 @@ const AdminDashboard = () => {
       
       navigate('/adminlogin')
   }
-  
+ 
   return (
 <div >
     <nav style={{ backgroundColor: 'black', color: 'white', padding: '15px', display: 'flex', justifyContent: 'space-between',width:'100%' }}>
@@ -134,10 +146,9 @@ const AdminDashboard = () => {
         <input style={{width:"100%"}} onChange={(e) => handleSearch(e)} type="text" class="search-input" placeholder="Search..."/>
     </div>
     <div style={{ display: 'flex', alignItems: 'center' }}>
-    <Link to={'/adduser'}className="btn btn-outline-light " style={{ cursor: 'pointer' }}>
+    <Link to={'/adduser'}className="btn btn-outline-light" style={{ cursor: 'pointer' }}>
       ADD USER
     </Link>
-    <p style={{color:'black'}}>ashra</p>
     <Link onClick={(e) => handleAdminLogout(e)}	  className="btn btn-outline-light " style={{ cursor: 'pointer' }}>
       LOGOUT
     </Link>

@@ -21,14 +21,16 @@ function Login() {
     const validform = () =>{
         const {email , password} = user;
         const newError = {};
-        
+        if(email.trim() === ''){
+          newError.email = "Please enter valid email address"
+        }
         if(!validator.isEmail(email)){
             newError.email = "Please enter valid email address"
         }
 
-        // if (!validator.isLength(password, { min: 5 })) {
-        //     newError.password = 'Password must be at least 5 characters long';
-        // }
+        if (!validator.isLength(password, { min: 5 })) {
+            newError.password = 'Password must be at least 5 characters long';
+        }
       
         
         setErrors(newError)
@@ -43,6 +45,47 @@ function Login() {
 
     const UserLogin = async (e) => {
         e.preventDefault()
+        if(user.email.trim() === ''){
+        console.log('email',user.email);
+          const Toast = Swal.mixin({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 3000,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+              toast.onmouseenter = Swal.stopTimer;
+              toast.onmouseleave = Swal.resumeTimer;
+            },
+          });
+          
+          Toast.fire({
+            icon: 'error',
+            title: 'Email cannot be Empty',
+          });
+          return false
+        }
+        if(user.password.trim() === ''){
+          console.log('email',user.email);
+            const Toast = Swal.mixin({
+              toast: true,
+              position: 'top-end',
+              showConfirmButton: false,
+              timer: 3000,
+              timerProgressBar: true,
+              didOpen: (toast) => {
+                toast.onmouseenter = Swal.stopTimer;
+                toast.onmouseleave = Swal.resumeTimer;
+              },
+              
+            });
+            
+            Toast.fire({
+              icon: 'error',
+              title: 'Password cannot be Empty',
+            });
+          return false 
+        }
         if(validform()){
             const decodToken = await dispatch(userLogin(user))
             if(decodToken.payload === false){
@@ -125,7 +168,7 @@ function Login() {
                 onChange={handleSet}
                 required
                 placeholder='Enter your Email'
-                className='input'
+                className='input-1'
             />
              {errors.email && <p className='error-message'>{errors.email}</p>}
             
@@ -138,6 +181,7 @@ function Login() {
                 required
                 onChange={handleSet}
                 placeholder='Enter your Password'
+                className='input-1'
             />
              {errors.password && <p className='error-message'>{errors.password}</p>}
 
